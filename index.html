@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:,">
+  <title>css-for-line-clamp-ellipsis</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
+    }
+
+    header {
+      display: flex;
+      justify-content: center;
+    }
+
+    main {
+      inline-size: min(720px, 100% - 16px);
+      margin-inline: auto;
+    }
+
+    .line-clamp {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 5;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>css-for-line-clamp-ellipsis</h1>
+  </header>
+
+  <main>
+    <p>Here's the CSS required to make a paragraph truncate with an ellipsis after a specific number of lines
+      (the vendor prefixes are required):</p>
+    <pre>
+.line-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+}
+    </pre>
+    <p>Here is the above CSS in action:</p>
+    <p class="line-clamp">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+      magna aliqua. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin. Suscipit adipiscing bibendum
+      est ultricies integer quis auctor. Odio facilisis mauris sit amet massa vitae tortor condimentum lacinia. Nam
+      libero justo laoreet sit amet cursus sit amet. Nisl vel pretium lectus quam id. Proin nibh nisl condimentum id.
+      Sagittis vitae et leo duis ut diam quam nulla. Sed cras ornare arcu dui vivamus arcu felis. Vulputate ut pharetra
+      sit amet aliquam id diam. Id neque aliquam vestibulum morbi. Tellus at urna condimentum mattis. Non enim praesent
+      elementum facilisis leo vel. Turpis massa tincidunt dui ut. Risus quis varius quam quisque id. Amet purus gravida
+      quis blandit. Felis eget velit aliquet sagittis id consectetur purus ut. Quis commodo odio aenean sed adipiscing.
+      Pellentesque elit eget gravida cum sociis natoque penatibus et magnis. Facilisis leo vel fringilla est ullamcorper
+      eget nulla. Montes nascetur ridiculus mus mauris. Nunc sed augue lacus viverra vitae congue. Morbi non arcu risus
+      quis varius quam quisque id. Adipiscing tristique risus nec feugiat in fermentum posuere urna nec. Elit
+      ullamcorper dignissim cras tincidunt lobortis feugiat vivamus.
+    </p>
+  </main>
+</body>
+
+</html>
