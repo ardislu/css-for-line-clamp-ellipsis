@@ -31,6 +31,17 @@
     .width-resizable {
       resize: horizontal;
     }
+
+    .dynamic-line-clamp {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: var(--lines);
+      overflow: hidden;
+    }
+
+    .height-resizable {
+      resize: vertical;
+    }
   </style>
 </head>
 
@@ -65,7 +76,67 @@
       quis varius quam quisque id. Adipiscing tristique risus nec feugiat in fermentum posuere urna nec. Elit
       ullamcorper dignissim cras tincidunt lobortis feugiat vivamus.
     </p>
+    <p>You can also use a CSS variable and some JavaScript to dynamically set the <code>-webkit-line-clamp</code>
+      property based on the container's height. Using this CSS:
+    </p>
+    <pre>
+.dynamic-line-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--lines);
+  overflow: hidden;
+}
+    </pre>
+    <p>And this JavaScript:</p>
+    <pre>
+function getLineHeightInPx(elem) {
+  const temp = document.createElement('div');
+  temp.textContent = '0';
+  elem.insertAdjacentElement('beforeend', temp);
+  const h = temp.scrollHeight;
+  temp.remove();
+  return h;
+}
+
+const elem = document.querySelector('.dynamic-line-clamp');
+new ResizeObserver(_ => elem.style.setProperty('--lines', Math.floor(elem.clientHeight / getLineHeightInPx(elem)))).observe(elem);
+    </pre>
+    <p>Try adjusting the height:</p>
+    <p class="dynamic-line-clamp height-resizable">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+      magna aliqua. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin. Suscipit adipiscing bibendum
+      est ultricies integer quis auctor. Odio facilisis mauris sit amet massa vitae tortor condimentum lacinia. Nam
+      libero justo laoreet sit amet cursus sit amet. Nisl vel pretium lectus quam id. Proin nibh nisl condimentum id.
+      Sagittis vitae et leo duis ut diam quam nulla. Sed cras ornare arcu dui vivamus arcu felis. Vulputate ut pharetra
+      sit amet aliquam id diam. Id neque aliquam vestibulum morbi. Tellus at urna condimentum mattis. Non enim praesent
+      elementum facilisis leo vel. Turpis massa tincidunt dui ut. Risus quis varius quam quisque id. Amet purus gravida
+      quis blandit. Felis eget velit aliquet sagittis id consectetur purus ut. Quis commodo odio aenean sed adipiscing.
+      Pellentesque elit eget gravida cum sociis natoque penatibus et magnis. Facilisis leo vel fringilla est ullamcorper
+      eget nulla. Montes nascetur ridiculus mus mauris. Nunc sed augue lacus viverra vitae congue. Morbi non arcu risus
+      quis varius quam quisque id. Adipiscing tristique risus nec feugiat in fermentum posuere urna nec. Elit
+      ullamcorper dignissim cras tincidunt lobortis feugiat vivamus.
+    </p>
+    <p>Note that <code>overflow: hidden</code> <strong>will only hide lines that are completely cut off</strong> from
+      the container element. So if you resized the paragraph to cut through the middle of a line, the ellipsis will
+      appear in the line above it but the cut off line will still be visible. When resizing the element, you'll need to
+      be careful to only resize it to mulitples of its <code>line-height</code>. This behavior appears to be a hard
+      limitation of <code>line-clamp</code>.
+    </p>
   </main>
+
+  <script type="module">
+    function getLineHeightInPx(elem) {
+      const temp = document.createElement('div');
+      temp.textContent = '0';
+      elem.insertAdjacentElement('beforeend', temp);
+      const h = temp.scrollHeight;
+      temp.remove();
+      return h;
+    }
+
+    const elem = document.querySelector('.dynamic-line-clamp');
+    new ResizeObserver(_ => elem.style.setProperty('--lines', Math.floor(elem.clientHeight / getLineHeightInPx(elem)))).observe(elem);
+  </script>
 </body>
 
 </html>
