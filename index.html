@@ -15,8 +15,32 @@
 
     header {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
       margin-inline: 8px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.75rem;
+      margin: 0;
+    }
+
+    a {
+      color: hsl(216deg 50% 50%);
+      font-weight: 700;
+      padding-block: 2px;
+      padding-inline: 4px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 500ms, color 800ms;
+    }
+
+    a:hover,
+    a:focus {
+      color: hsl(216deg 50% 40%);
+      background: hsl(216deg 50% 90%);
+      transition: background-color 200ms, color 200ms;
     }
 
     main {
@@ -69,6 +93,7 @@
 <body>
   <header>
     <h1>CSS for line clamp ellipsis</h1>
+    <a href="https://github.com/ardislu/css-for-line-clamp-ellipsis">GitHub</a>
   </header>
 
   <main>
