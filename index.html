@@ -59,8 +59,7 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 5;
   overflow: hidden;
-}
-    </pre>
+}</pre>
     <p>Here is the above CSS in action. Try adjusting the paragraph's width:</p>
     <p class="line-clamp width-resizable">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
@@ -85,8 +84,7 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: var(--lines);
   overflow: hidden;
-}
-    </pre>
+}</pre>
     <p>And this JavaScript:</p>
     <pre>
 function getLineHeightInPx(elem) {
@@ -99,8 +97,7 @@ function getLineHeightInPx(elem) {
 }
 
 const elem = document.querySelector('.dynamic-line-clamp');
-new ResizeObserver(_ => elem.style.setProperty('--lines', Math.floor(elem.clientHeight / getLineHeightInPx(elem)))).observe(elem);
-    </pre>
+new ResizeObserver(_ => elem.style.setProperty('--lines', Math.floor(elem.clientHeight / getLineHeightInPx(elem)))).observe(elem);</pre>
     <p>Try adjusting the height:</p>
     <p class="dynamic-line-clamp height-resizable">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
