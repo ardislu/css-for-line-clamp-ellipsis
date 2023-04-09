@@ -108,11 +108,13 @@
       position: relative;
     }
 
-    .aside {
-      inline-size: calc(100% - 80ch);
-      position: absolute;
-      top: 0;
-      transform: translateX(calc(80ch + 16px));
+    @media (min-width: 1080px) {
+      .aside {
+        inline-size: calc(100% - 80ch);
+        position: absolute;
+        top: 0;
+        transform: translateX(calc(80ch + 16px));
+      }
     }
   </style>
 </head>
