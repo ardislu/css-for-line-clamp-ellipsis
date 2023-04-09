@@ -103,6 +103,17 @@
       border: 1px dashed hsl(216deg 50% 75%);
       border-radius: 4px;
     }
+
+    .aside-container {
+      position: relative;
+    }
+
+    .aside {
+      inline-size: calc(100% - 80ch);
+      position: absolute;
+      top: 0;
+      transform: translateX(calc(80ch + 16px));
+    }
   </style>
 </head>
 
@@ -161,26 +172,28 @@ function getLineHeightInPx(elem) {
 const elem = document.querySelector('.dynamic-line-clamp');
 new ResizeObserver(_ => elem.style.setProperty('--lines', Math.floor(elem.clientHeight / getLineHeightInPx(elem)))).observe(elem);</pre>
     <p>Try adjusting the height:</p>
-    <p class="dynamic-line-clamp height-resizable">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-      magna aliqua. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin. Suscipit adipiscing bibendum
-      est ultricies integer quis auctor. Odio facilisis mauris sit amet massa vitae tortor condimentum lacinia. Nam
-      libero justo laoreet sit amet cursus sit amet. Nisl vel pretium lectus quam id. Proin nibh nisl condimentum id.
-      Sagittis vitae et leo duis ut diam quam nulla. Sed cras ornare arcu dui vivamus arcu felis. Vulputate ut pharetra
-      sit amet aliquam id diam. Id neque aliquam vestibulum morbi. Tellus at urna condimentum mattis. Non enim praesent
-      elementum facilisis leo vel. Turpis massa tincidunt dui ut. Risus quis varius quam quisque id. Amet purus gravida
-      quis blandit. Felis eget velit aliquet sagittis id consectetur purus ut. Quis commodo odio aenean sed adipiscing.
-      Pellentesque elit eget gravida cum sociis natoque penatibus et magnis. Facilisis leo vel fringilla est ullamcorper
-      eget nulla. Montes nascetur ridiculus mus mauris. Nunc sed augue lacus viverra vitae congue. Morbi non arcu risus
-      quis varius quam quisque id. Adipiscing tristique risus nec feugiat in fermentum posuere urna nec. Elit
-      ullamcorper dignissim cras tincidunt lobortis feugiat vivamus.
-    </p>
-    <p>Note that <code>overflow: hidden</code> <strong>will only hide lines that are completely cut off</strong> from
-      the container element. So if you resized the paragraph to cut through the middle of a line, the ellipsis will
-      appear in the line above it but the cut off line will still be visible. When resizing the element, you'll need to
-      be careful to only resize it to mulitples of its <code>line-height</code>. This behavior appears to be a hard
-      limitation of <code>line-clamp</code>.
-    </p>
+    <div class="aside-container">
+      <p class="dynamic-line-clamp height-resizable">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin. Suscipit adipiscing bibendum
+        est ultricies integer quis auctor. Odio facilisis mauris sit amet massa vitae tortor condimentum lacinia. Nam
+        libero justo laoreet sit amet cursus sit amet. Nisl vel pretium lectus quam id. Proin nibh nisl condimentum id.
+        Sagittis vitae et leo duis ut diam quam nulla. Sed cras ornare arcu dui vivamus arcu felis. Vulputate ut pharetra
+        sit amet aliquam id diam. Id neque aliquam vestibulum morbi. Tellus at urna condimentum mattis. Non enim praesent
+        elementum facilisis leo vel. Turpis massa tincidunt dui ut. Risus quis varius quam quisque id. Amet purus gravida
+        quis blandit. Felis eget velit aliquet sagittis id consectetur purus ut. Quis commodo odio aenean sed adipiscing.
+        Pellentesque elit eget gravida cum sociis natoque penatibus et magnis. Facilisis leo vel fringilla est ullamcorper
+        eget nulla. Montes nascetur ridiculus mus mauris. Nunc sed augue lacus viverra vitae congue. Morbi non arcu risus
+        quis varius quam quisque id. Adipiscing tristique risus nec feugiat in fermentum posuere urna nec. Elit
+        ullamcorper dignissim cras tincidunt lobortis feugiat vivamus.
+      </p>
+      <p class="aside">Note that <code>overflow: hidden</code> <strong>will only hide lines that are completely cut off</strong> from
+        the container element. So if you resized the paragraph to cut through the middle of a line, the ellipsis will
+        appear in the line above it but the cut off line will still be visible. When resizing the element, you'll need to
+        be careful to only resize it to mulitples of its <code>line-height</code>. This behavior appears to be a hard
+        limitation of <code>line-clamp</code>.
+      </p>
+    </div>
   </main>
 
   <script type="module">
