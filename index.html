@@ -204,9 +204,29 @@ new ResizeObserver(_ => elem.style.setProperty('--lines', Math.floor(elem.client
         limitation of <code>line-clamp</code>.
       </p>
     </div>
+    <p>It's helpful to debounce <code>ResizeObserver</code>'s event listener for better performance. Using this basic debounce function:</p>
+    <pre>
+function debounce(fn, wait) {
+  let timeoutId;
+  return () => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(fn, wait);
+  }
+}</pre>
+    <p>You can update the event listener to cancel if another event is fired within 200 milliseconds:</p>
+    <pre>
+new ResizeObserver(debounce(() => elem.style.setProperty('--lines', Math.floor(elem.clientHeight / getLineHeightInPx(elem))), 200)).observe(elem);</pre>
   </main>
 
   <script type="module">
+    function debounce(fn, wait) {
+      let timeoutId;
+      return () => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(fn, wait);
+      }
+    }
+
     function getLineHeightInPx(elem) {
       const temp = document.createElement('div');
       temp.textContent = '0';
@@ -217,7 +237,7 @@ new ResizeObserver(_ => elem.style.setProperty('--lines', Math.floor(elem.client
     }
 
     const elem = document.querySelector('.dynamic-line-clamp');
-    new ResizeObserver(_ => elem.style.setProperty('--lines', Math.floor(elem.clientHeight / getLineHeightInPx(elem)))).observe(elem);
+    new ResizeObserver(debounce(() => elem.style.setProperty('--lines', Math.floor(elem.clientHeight / getLineHeightInPx(elem))), 200)).observe(elem);
   </script>
 </body>
 
