@@ -102,6 +102,10 @@
       max-block-size: 294px;
     }
 
+    .height-resizable-container {
+      min-block-size: 296px;
+    }
+
     .width-resizable,
     .height-resizable {
       border: 1px dashed hsl(216deg 50% 75%);
@@ -178,7 +182,7 @@ function getLineHeightInPx(elem) {
 const elem = document.querySelector('.dynamic-line-clamp');
 new ResizeObserver(_ => elem.style.setProperty('--lines', Math.floor(elem.clientHeight / getLineHeightInPx(elem)))).observe(elem);</pre>
     <p>Try adjusting the height:</p>
-    <div class="aside-container">
+    <div class="aside-container height-resizable-container">
       <p class="dynamic-line-clamp height-resizable">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
         magna aliqua. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin. Suscipit adipiscing bibendum
