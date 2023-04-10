@@ -85,6 +85,8 @@
 
     .width-resizable {
       resize: horizontal;
+      min-inline-size: 50px;
+      max-inline-size: min(1080px, 100% - 16px);
     }
 
     .dynamic-line-clamp {
@@ -96,6 +98,8 @@
 
     .height-resizable {
       resize: vertical;
+      min-block-size: 21px;
+      max-block-size: 294px;
     }
 
     .width-resizable,
