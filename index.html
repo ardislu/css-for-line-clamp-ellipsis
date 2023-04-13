@@ -269,6 +269,14 @@ new ResizeObserver(debounce(() => {
 
     <section>
       <h2>Full example</h2>
+      <p>Here's the final CSS:</p>
+      <pre>
+.dynamic-line-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--lines);
+  overflow: hidden;
+}</pre>
       <p>And the final combined JavaScript with all the bells and whistles:</p>
       <pre>
 function debounce(fn, wait) {
