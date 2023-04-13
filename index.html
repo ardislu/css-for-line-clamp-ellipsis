@@ -111,8 +111,17 @@
       min-block-size: 417px;
     }
 
+    .both-resizable {
+      resize: both;
+      min-block-size: 21px;
+      max-block-size: 294px;
+      min-inline-size: 50px;
+      max-inline-size: min(1080px, 100%);
+    }
+
     .width-resizable,
-    .height-resizable {
+    .height-resizable,
+    .both-resizable {
       border: 1px dashed hsl(216deg 50% 75%);
       border-radius: 4px;
     }
@@ -198,7 +207,7 @@ const elem = document.querySelector('.dynamic-line-clamp');
 new ResizeObserver(_ => elem.style.setProperty('--lines', Math.floor(elem.clientHeight / getLineHeightInPx(elem)))).observe(elem);</pre>
     <p>Try adjusting the height:</p>
     <div class="aside-container height-resizable-container">
-      <p class="dynamic-line-clamp height-resizable">
+      <p id="basic-observer" class="dynamic-line-clamp height-resizable">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
         magna aliqua. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin. Suscipit adipiscing bibendum
         est ultricies integer quis auctor. Odio facilisis mauris sit amet massa vitae tortor condimentum lacinia. Nam
@@ -212,14 +221,24 @@ new ResizeObserver(_ => elem.style.setProperty('--lines', Math.floor(elem.client
         quis varius quam quisque id. Adipiscing tristique risus nec feugiat in fermentum posuere urna nec. Elit
         ullamcorper dignissim cras tincidunt lobortis feugiat vivamus.
       </p>
-      <p class="aside">Note that <code>overflow: hidden</code> <strong>will only hide lines that are completely cut off</strong> from
-        the container element. So if you resize the paragraph to cut through the middle of a line, the ellipsis will
-        appear in the line above it but the cut off line will still be visible. When resizing the element, you'll need to
-        be careful to only resize it to mulitples of its <code>line-height</code>. This behavior appears to be a hard
-        limitation of <code>line-clamp</code>.
+      <p class="aside">Note that <code>overflow: hidden</code> <strong>will only hide text that is outside</strong> the
+        container element. So if you resize the paragraph to cut through the middle of a line, the ellipsis will appear in
+        the line above it but the cut-off text will still be visible.
       </p>
     </div>
-    <p>It's helpful to debounce <code>ResizeObserver</code>'s event listener for better performance. Using this basic debounce function:</p>
+    <p>
+      If your paragraph's height is dynamic, it's useful to add some JavaScript to snap the paragraph's <code>height</code> to
+      a multiple of its <code>line-height</code> whenever the paragraph is resized. To do so, update the event listener like so:
+    </p>
+    <pre>
+new ResizeObserver(_ => {
+  const lineHeight = getLineHeightInPx(elem);
+  const lines = Math.floor(elem.clientHeight / lineHeight);
+  elem.style.setProperty('--lines', lines);
+  elem.style.setProperty('height', `${lines * lineHeight}px`);
+}).observe(elem);</pre>
+    <p>Lastly, it's best to debounce the event listener for better performance and to prevent the event listener from fighting with
+      the user for control over the element's height while the user is resizing it. Using this basic debounce function:</p>
     <pre>
 function debounce(fn, wait) {
   let timeoutId;
@@ -230,7 +249,63 @@ function debounce(fn, wait) {
 }</pre>
     <p>You can update the event listener to cancel if another event is fired within 200 milliseconds:</p>
     <pre>
-new ResizeObserver(debounce(() => elem.style.setProperty('--lines', Math.floor(elem.clientHeight / getLineHeightInPx(elem))), 200)).observe(elem);</pre>
+new ResizeObserver(debounce(() => {
+  const lineHeight = getLineHeightInPx(elem);
+  const lines = Math.floor(elem.clientHeight / lineHeight);
+  elem.style.setProperty('--lines', lines);
+  elem.style.setProperty('height', `${lines * lineHeight}px`);
+}, 200)).observe(elem);</pre>
+    <p>The final combined JavaScript looks like this:</p>
+    <pre>
+new ResizeObserver(debounce(() => {
+  const lineHeight = getLineHeightInPx(elem);
+  const lines = Math.floor(elem.clientHeight / lineHeight);
+  elem.style.setProperty('--lines', lines);
+  elem.style.setProperty('height', `${lines * lineHeight}px`);
+}, 200)).observe(elem);</pre>
+    <p>Here's the final combined JavaScript with all the bells and whistles:</p>
+    <pre>
+function debounce(fn, wait) {
+  let timeoutId;
+  return () => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(fn, wait);
+  }
+}
+
+function getLineHeightInPx(elem) {
+  const temp = document.createElement('div');
+  temp.textContent = '0';
+  elem.insertAdjacentElement('beforeend', temp);
+  const h = temp.scrollHeight;
+  temp.remove();
+  return h;
+}
+
+const elem = document.querySelector('.dynamic-line-clamp');
+new ResizeObserver(debounce(() => {
+  const lineHeight = getLineHeightInPx(elem);
+  const lines = Math.floor(elem.clientHeight / lineHeight);
+  elem.style.setProperty('--lines', lines);
+  elem.style.setProperty('height', `${lines * lineHeight}px`);
+}, 200)).observe(elem);</pre>
+    <p>And here it is in action!</p>
+    <div class="height-resizable-container">
+      <p id="full-observer" class="dynamic-line-clamp both-resizable">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin. Suscipit adipiscing bibendum
+        est ultricies integer quis auctor. Odio facilisis mauris sit amet massa vitae tortor condimentum lacinia. Nam
+        libero justo laoreet sit amet cursus sit amet. Nisl vel pretium lectus quam id. Proin nibh nisl condimentum id.
+        Sagittis vitae et leo duis ut diam quam nulla. Sed cras ornare arcu dui vivamus arcu felis. Vulputate ut pharetra
+        sit amet aliquam id diam. Id neque aliquam vestibulum morbi. Tellus at urna condimentum mattis. Non enim praesent
+        elementum facilisis leo vel. Turpis massa tincidunt dui ut. Risus quis varius quam quisque id. Amet purus gravida
+        quis blandit. Felis eget velit aliquet sagittis id consectetur purus ut. Quis commodo odio aenean sed adipiscing.
+        Pellentesque elit eget gravida cum sociis natoque penatibus et magnis. Facilisis leo vel fringilla est ullamcorper
+        eget nulla. Montes nascetur ridiculus mus mauris. Nunc sed augue lacus viverra vitae congue. Morbi non arcu risus
+        quis varius quam quisque id. Adipiscing tristique risus nec feugiat in fermentum posuere urna nec. Elit
+        ullamcorper dignissim cras tincidunt lobortis feugiat vivamus.
+      </p>
+    </div>
   </main>
 
   <script type="module">
@@ -251,8 +326,16 @@ new ResizeObserver(debounce(() => elem.style.setProperty('--lines', Math.floor(e
       return h;
     }
 
-    const elem = document.querySelector('.dynamic-line-clamp');
-    new ResizeObserver(debounce(() => elem.style.setProperty('--lines', Math.floor(elem.clientHeight / getLineHeightInPx(elem))), 200)).observe(elem);
+    const elem = document.querySelector('#basic-observer');
+    new ResizeObserver(_ => elem.style.setProperty('--lines', Math.floor(elem.clientHeight / getLineHeightInPx(elem)))).observe(elem);
+
+    const elem2 = document.querySelector('#full-observer');
+    new ResizeObserver(debounce(() => {
+      const lineHeight = getLineHeightInPx(elem2);
+      const lines = Math.floor(elem2.clientHeight / lineHeight);
+      elem2.style.setProperty('--lines', lines);
+      elem2.style.setProperty('height', `${lines * lineHeight}px`);
+    }, 200)).observe(elem2);
   </script>
 </body>
 
