@@ -228,7 +228,7 @@ new ResizeObserver(_ => elem.style.setProperty('--lines', Math.floor(elem.client
           ullamcorper dignissim cras tincidunt lobortis feugiat vivamus.
         </p>
         <p class="aside">Note that <code>overflow: hidden</code> <strong>will only hide text that is outside</strong> the
-          container element. So if you resize the paragraph to cut through the middle of a line, the ellipsis will appear in
+          container element. So if you resize the paragraph to cut through the middle of a line, the ellipsis will appear on
           the line above it but the cut-off text will still be visible.
         </p>
       </div>
@@ -237,8 +237,8 @@ new ResizeObserver(_ => elem.style.setProperty('--lines', Math.floor(elem.client
     <section>
       <h2>Dynamic number of lines: quality of life improvements</h2>
       <p>
-        If your paragraph's height is dynamic, it's useful to add some JavaScript to snap the paragraph's <code>height</code> to
-        a multiple of its <code>line-height</code> whenever the paragraph is resized. To do so, update the event listener like so:
+        If your paragraph's height is dynamic, it's useful to add some JavaScript to snap the paragraph's height to a multiple of
+        its <code>line-height</code> whenever the paragraph is resized. To do so, update the event listener:
       </p>
       <pre>
 new ResizeObserver(_ => {
@@ -247,7 +247,7 @@ new ResizeObserver(_ => {
   elem.style.setProperty('--lines', lines);
   elem.style.setProperty('height', `${lines * lineHeight}px`);
 }).observe(elem);</pre>
-      <p>Lastly, it's best to debounce the event listener for better performance and to prevent the event listener from fighting with
+      <p>It's also best to debounce the event listener for better performance and to prevent the event listener from fighting with
         the user for control over the element's height while the user is resizing it. Using this basic debounce function:</p>
       <pre>
 function debounce(fn, wait) {
