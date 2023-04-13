@@ -108,7 +108,7 @@
     }
 
     .height-resizable-container {
-      min-block-size: 417px;
+      min-block-size: 296px;
     }
 
     .both-resizable {
@@ -124,29 +124,6 @@
     .both-resizable {
       border: 1px dashed hsl(216deg 50% 75%);
       border-radius: 4px;
-    }
-
-    .aside-container {
-      position: relative;
-    }
-
-    .aside {
-      position: absolute;
-      bottom: 0;
-      margin: 0;
-    }
-
-    @media (min-width: 1080px) {
-      .height-resizable-container {
-        min-block-size: 296px;
-      }
-
-      .aside {
-        inline-size: calc(100% - 80ch);
-        position: absolute;
-        top: 0;
-        transform: translateX(calc(80ch + 16px));
-      }
     }
   </style>
 </head>
@@ -212,7 +189,7 @@ function getLineHeightInPx(elem) {
 const elem = document.querySelector('.dynamic-line-clamp');
 new ResizeObserver(_ => elem.style.setProperty('--lines', Math.floor(elem.clientHeight / getLineHeightInPx(elem)))).observe(elem);</pre>
       <p>Try adjusting the height:</p>
-      <div class="aside-container height-resizable-container">
+      <div class="height-resizable-container">
         <p id="basic-observer" class="dynamic-line-clamp height-resizable">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
           magna aliqua. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin. Suscipit adipiscing bibendum
@@ -227,11 +204,11 @@ new ResizeObserver(_ => elem.style.setProperty('--lines', Math.floor(elem.client
           quis varius quam quisque id. Adipiscing tristique risus nec feugiat in fermentum posuere urna nec. Elit
           ullamcorper dignissim cras tincidunt lobortis feugiat vivamus.
         </p>
-        <p class="aside">Note that <code>overflow: hidden</code> <strong>will only hide text that is outside</strong> the
-          container element. So if you resize the paragraph to cut through the middle of a line, the ellipsis will appear on
-          the line above it but the cut-off text will still be visible.
-        </p>
       </div>
+      <p>Note that <code>overflow: hidden</code> <strong>will only hide text that is outside</strong> the
+        container element. So if you resize the paragraph to cut through the middle of a line, the ellipsis will appear on
+        the line above it but the cut-off text will still be visible.
+      </p>
     </section>
 
     <section>
