@@ -9,23 +9,29 @@
   <meta property="og:description" content="A reference page for this extremely specific combination of CSS properties that are required to truncate a paragraph after a specified number of lines.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://cssforlineclampellipsis.com/">
-  <link rel="preconnect" href="https://rsms.me/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" >
   <link rel="canonical" href="https://cssforlineclampellipsis.com/">
   <link rel="icon" href="data:,">
   <title>CSS for line clamp ellipsis</title>
   <style>
-    :root {
-      font-family: 'Inter', sans-serif;
+    @font-face {
+      font-family: 'Inter';
+      font-weight: 400;
+      src: local('Inter'), url('/Inter.woff2') format('woff2');
     }
 
-    @supports (font-variation-settings: normal) {
-      :root {
-        font-family: 'Inter var', sans-serif;
-      }
+    @font-face {
+      font-family: 'Inter';
+      font-weight: 700;
+      src: local('Inter'), url('/Inter_Bold.woff2') format('woff2');
+    }
+
+    @font-face {
+      font-family: 'Source Code Pro';
+      src: local('Source Code Pro'), url('/Source_Code_Pro.woff2') format('woff2');
+    }
+
+    :root {
+      font-family: 'Inter', sans-serif;
     }
 
     body {
@@ -70,7 +76,7 @@
     }
 
     p {
-      inline-size: min(80ch, 100%);
+      inline-size: min(51ch, 100%);
     }
 
     p:not(.line-clamp, .dynamic-line-clamp) {
