@@ -13,6 +13,8 @@
   <link rel="icon" href="data:,">
   <title>CSS for line clamp ellipsis</title>
   <style>
+    @import '/prism.css' layer;
+
     @font-face {
       font-family: 'Inter';
       font-weight: 400;
@@ -85,27 +87,20 @@
 
     pre,
     code {
-      font-family: 'Source Code Pro', monospace;
-      background: hsl(216deg 50% 90%);
       border-radius: 4px;
       border: 1px solid hsl(216deg 50% 75%);
+      background: hsl(24deg 20% 95%);
       overflow: auto;
-      transition: background-color 500ms, filter 800ms;
     }
 
-    pre {
-      padding: 8px;
+    pre>code {
+      border: unset;
     }
 
     code {
+      font-family: 'Source Code Pro', monospace;
       padding-block: 2px;
       padding-inline: 4px;
-    }
-
-    :is(pre, code):is(:hover, :focus-within) {
-      background: hsl(216deg 50% 87%);
-      filter: drop-shadow(0 0 8px hsl(216deg 50% 90%));
-      transition: background-color 200ms, filter 300ms;
     }
 
     .line-clamp {
@@ -166,13 +161,12 @@
       <h2>Fixed number of lines</h2>
       <p>Here's the CSS required to make a paragraph truncate with an ellipsis after a specific number of lines
         (the vendor prefixes are required):</p>
-      <pre>
-.line-clamp {
+      <pre><code class="language-css">.line-clamp {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 5;
   overflow: hidden;
-}</pre>
+}</code></pre>
       <p>Here is the above CSS in action. Try adjusting the paragraph's width:</p>
       <p class="line-clamp width-resizable">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
@@ -195,16 +189,14 @@
       <p>You can also use a CSS variable and some JavaScript to dynamically set the <code>-webkit-line-clamp</code>
         property based on the container's height. Using this CSS:
       </p>
-      <pre>
-.dynamic-line-clamp {
+      <pre><code class="language-css">.dynamic-line-clamp {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: var(--lines);
   overflow: hidden;
-}</pre>
+}</code></pre>
       <p>And this JavaScript:</p>
-      <pre>
-function getLineHeightInPx(elem) {
+      <pre><code class="language-javascript">function getLineHeightInPx(elem) {
   const temp = document.createElement('div');
   temp.textContent = '0';
   elem.insertAdjacentElement('beforeend', temp);
@@ -216,7 +208,7 @@ function getLineHeightInPx(elem) {
 const elem = document.querySelector('.dynamic-line-clamp');
 new ResizeObserver(_ => {
   elem.style.setProperty('--lines', Math.floor(elem.clientHeight / getLineHeightInPx(elem)));
-}).observe(elem);</pre>
+}).observe(elem);</code></pre>
       <p>Try adjusting the height:</p>
       <div class="height-resizable-container">
         <p id="basic-observer" class="dynamic-line-clamp height-resizable">
@@ -246,46 +238,41 @@ new ResizeObserver(_ => {
         If your paragraph's height is dynamic, it's useful to add some JavaScript to snap the paragraph's height to a multiple of
         its <code>line-height</code> whenever the paragraph is resized. To do so, update the event listener:
       </p>
-      <pre>
-new ResizeObserver(_ => {
+      <pre><code class="language-javascript">new ResizeObserver(_ => {
   const lineHeight = getLineHeightInPx(elem);
   const lines = Math.floor(elem.clientHeight / lineHeight);
   elem.style.setProperty('--lines', lines);
   elem.style.setProperty('height', `${lines * lineHeight}px`);
-}).observe(elem);</pre>
+}).observe(elem);</code></pre>
       <p>It's also best to debounce the event listener for better performance and to prevent the event listener from fighting with
         the user for control over the element's height while the user is resizing it. Using this basic debounce function:</p>
-      <pre>
-function debounce(fn, wait) {
+      <pre><code class="language-javascript">function debounce(fn, wait) {
   let timeoutId;
   return () => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(fn, wait);
   }
-}</pre>
+}</code></pre>
       <p>You can update the event listener to cancel if another event is fired within 200 milliseconds:</p>
-      <pre>
-new ResizeObserver(debounce(() => {
+      <pre><code class="language-javascript">new ResizeObserver(debounce(() => {
   const lineHeight = getLineHeightInPx(elem);
   const lines = Math.floor(elem.clientHeight / lineHeight);
   elem.style.setProperty('--lines', lines);
   elem.style.setProperty('height', `${lines * lineHeight}px`);
-}, 200)).observe(elem);</pre>
+}, 200)).observe(elem);</code></pre>
     </section>
 
     <section>
       <h2>Full example</h2>
       <p>Here's the final CSS:</p>
-      <pre>
-.dynamic-line-clamp {
+      <pre><code class="language-css">.dynamic-line-clamp {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: var(--lines);
   overflow: hidden;
-}</pre>
+}</code></pre>
       <p>And the final combined JavaScript with all the bells and whistles:</p>
-      <pre>
-function debounce(fn, wait) {
+      <pre><code class="language-javascript">function debounce(fn, wait) {
   let timeoutId;
   return () => {
     clearTimeout(timeoutId);
@@ -308,7 +295,7 @@ new ResizeObserver(debounce(() => {
   const lines = Math.floor(elem.clientHeight / lineHeight);
   elem.style.setProperty('--lines', lines);
   elem.style.setProperty('height', `${lines * lineHeight}px`);
-}, 200)).observe(elem);</pre>
+}, 200)).observe(elem);</code></pre>
       <p>And here it is in action!</p>
       <div class="height-resizable-container">
         <p id="full-observer" class="dynamic-line-clamp both-resizable">
@@ -329,6 +316,7 @@ new ResizeObserver(debounce(() => {
     </section>
   </main>
 
+  <script src="/prism.js"></script>
   <script type="module">
     function debounce(fn, wait) {
       let timeoutId;
