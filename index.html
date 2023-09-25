@@ -85,6 +85,32 @@
       line-height: 1.5;
     }
 
+    pre {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    button {
+      align-self: start;
+      min-inline-size: 26px;
+      padding: 0;
+      background: unset;
+      border: unset;
+      cursor: pointer;
+    }
+
+    svg {
+      display: block;
+      pointer-events: none;
+      opacity: 0.5;
+      transition: opacity 400ms;
+    }
+
+    :is(pre:hover, pre:focus-within) svg {
+      transition: opacity 200ms;
+      opacity: 0.9;
+    }
+
     pre,
     code {
       border-radius: 4px;
@@ -347,6 +373,31 @@ new ResizeObserver(debounce(() => {
       elem2.style.setProperty('--lines', lines);
       elem2.style.setProperty('height', `${lines * lineHeight}px`);
     }, 200)).observe(elem2);
+
+    // Insert "Copy to clipboard" icon button to all code blocks
+    const clipboardSVG = `<rect width="8" height="4" x="8" y="2" rx="1" ry="1"/>
+        <path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/>
+        <path d="M16 4h2a2 2 0 0 1 2 2v4"/><path d="M21 14H11"/>
+        <path d="m15 10-4 4 4 4"/>`;
+    const checkSVG = '<polyline points="20 6 9 17 4 12"/>';
+    document.querySelectorAll('pre').forEach(pre => {
+      pre.insertAdjacentHTML('beforeend', `<button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${clipboardSVG}</svg></button>`);
+    });
+
+    function copy(event) {
+      const button = event.target;
+      const code = button.closest('pre').querySelector('code').textContent;
+      navigator.clipboard.writeText(code);
+      const svg = button.querySelector('svg');
+      svg.style.setProperty('stroke', 'green');
+      svg.innerHTML = checkSVG;
+      setTimeout(() => {
+        svg.innerHTML = clipboardSVG;
+        svg.style.setProperty('stroke', 'currentColor');
+      }, 2000);
+    }
+
+    document.querySelectorAll('button').forEach(button => button.addEventListener('click', copy));
   </script>
 </body>
 
