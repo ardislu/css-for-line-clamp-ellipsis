@@ -381,7 +381,7 @@ new ResizeObserver(debounce(() => {
         <path d="m15 10-4 4 4 4"/>`;
     const checkSVG = '<polyline points="20 6 9 17 4 12"/>';
     document.querySelectorAll('pre').forEach(pre => {
-      pre.insertAdjacentHTML('beforeend', `<button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${clipboardSVG}</svg></button>`);
+      pre.insertAdjacentHTML('beforeend', `<button aria-label="Copy"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${clipboardSVG}</svg></button>`);
     });
 
     function copy(event) {
