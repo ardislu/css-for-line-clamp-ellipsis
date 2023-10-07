@@ -111,6 +111,11 @@
       opacity: 0.9;
     }
 
+    :is(button:hover, button:focus-within) svg {
+      filter: drop-shadow(0 0 16px hsl(216deg 50% 65%));
+      transition: filter 200ms;
+    }
+
     pre,
     code {
       border-radius: 4px;
