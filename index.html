@@ -11,6 +11,9 @@
   <meta property="og:url" content="https://cssforlineclampellipsis.com/">
   <link rel="canonical" href="https://cssforlineclampellipsis.com/">
   <link rel="icon" href="data:,">
+  <link rel="preload" href="/Inter.woff2" as="font" crossorigin>
+  <link rel="preload" href="/Inter_Bold.woff2" as="font" crossorigin>
+  <link rel="preload" href="/Source_Code_Pro.woff2" as="font" crossorigin>
   <title>CSS for line clamp ellipsis</title>
   <style>
     @import '/prism.css' layer;
@@ -18,18 +21,18 @@
     @font-face {
       font-family: 'Inter';
       font-weight: 400;
-      src: local('Inter'), url('/Inter.woff2') format('woff2');
+      src: local('Inter'), url('/Inter.woff2');
     }
 
     @font-face {
       font-family: 'Inter';
       font-weight: 700;
-      src: local('Inter'), url('/Inter_Bold.woff2') format('woff2');
+      src: local('Inter'), url('/Inter_Bold.woff2');
     }
 
     @font-face {
       font-family: 'Source Code Pro';
-      src: local('Source Code Pro'), url('/Source_Code_Pro.woff2') format('woff2');
+      src: local('Source Code Pro'), url('/Source_Code_Pro.woff2');
     }
 
     :root {
