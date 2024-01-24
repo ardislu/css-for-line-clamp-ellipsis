@@ -396,12 +396,14 @@ new ResizeObserver(debounce(() => {
       const button = event.target;
       const code = button.closest('pre').querySelector('code').textContent;
       navigator.clipboard.writeText(code);
+      button.setAttribute('aria-label', 'Copied!');
       const svg = button.querySelector('svg');
       svg.style.setProperty('stroke', 'green');
       svg.innerHTML = checkSVG;
       setTimeout(() => {
         svg.innerHTML = clipboardSVG;
         svg.style.setProperty('stroke', 'currentColor');
+        button.setAttribute('aria-label', 'Copy');
       }, 2000);
     }
 
