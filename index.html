@@ -276,7 +276,7 @@ new ResizeObserver(_ => {
       <h2>Dynamic number of lines: quality of life improvements</h2>
       <p>
         If your paragraph's height is dynamic, it's useful to add some JavaScript to snap the paragraph's height to a multiple of
-        its <code>line-height</code> whenever the paragraph is resized. To do so, update the event listener:
+        its <code>line-height</code> whenever the paragraph is resized. To do so, update <code>ResizeObserver</code>:
       </p>
       <pre><code class="language-javascript">new ResizeObserver(_ => {
   const lineHeight = getLineHeightInPx(elem);
@@ -284,7 +284,7 @@ new ResizeObserver(_ => {
   elem.style.setProperty('--lines', lines);
   elem.style.setProperty('height', `${lines * lineHeight}px`);
 }).observe(elem);</code></pre>
-      <p>It's also best to debounce the event listener for better performance and to prevent the event listener from fighting with
+      <p>It's also best to debounce the observer for better performance and to prevent the observer from fighting with
         the user for control over the element's height while the user is resizing it. Using this basic debounce function:</p>
       <pre><code class="language-javascript">function debounce(fn, wait) {
   let timeoutId;
@@ -293,7 +293,7 @@ new ResizeObserver(_ => {
     timeoutId = setTimeout(fn, wait);
   }
 }</code></pre>
-      <p>You can update the event listener to cancel if another event is fired within 200 milliseconds:</p>
+      <p>You can update the observer to cancel if another event is fired within 200 milliseconds:</p>
       <pre><code class="language-javascript">new ResizeObserver(debounce(() => {
   const lineHeight = getLineHeightInPx(elem);
   const lines = Math.floor(elem.clientHeight / lineHeight);
@@ -311,7 +311,7 @@ new ResizeObserver(_ => {
   -webkit-line-clamp: var(--lines);
   overflow: hidden;
 }</code></pre>
-      <p>And the final combined JavaScript with all the bells and whistles:</p>
+      <p>And the final JavaScript:</p>
       <pre><code class="language-javascript">function debounce(fn, wait) {
   let timeoutId;
   return () => {
