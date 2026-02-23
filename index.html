@@ -246,7 +246,7 @@
       <pre><code class="language-javascript">const elem = document.querySelector('.dynamic-line-clamp');
 const lh = Number(getComputedStyle(elem, '::after').getPropertyValue('height').slice(0, -2));
 new ResizeObserver(() => {
-  const lines = Math.round(elem.clientHeight / lh);
+  const lines = Math.floor(elem.clientHeight / lh);
   elem.style.setProperty('--lines', lines);
 }).observe(elem);</code></pre>
       <p>Try adjusting the height:</p>
@@ -279,7 +279,7 @@ new ResizeObserver(() => {
         its <code>line-height</code> whenever the paragraph is resized. To do so, update <code>ResizeObserver</code>:
       </p>
       <pre><code class="language-javascript">new ResizeObserver(() => {
-  const lines = Math.round(elem.clientHeight / lh);
+  const lines = Math.floor(elem.clientHeight / lh);
   elem.style.setProperty('--lines', lines);
   elem.style.setProperty('height', `${lines * lh}px`);
 }).observe(elem);</code></pre>
@@ -294,7 +294,7 @@ new ResizeObserver(() => {
 }</code></pre>
       <p>You can update the observer to cancel if another event is fired within 200 milliseconds:</p>
       <pre><code class="language-javascript">new ResizeObserver(debounce(() => {
-  const lines = Math.round(elem.clientHeight / lh);
+  const lines = Math.floor(elem.clientHeight / lh);
   elem.style.setProperty('--lines', lines);
   elem.style.setProperty('height', `${lines * lh}px`);
 }, 200)).observe(elem);</code></pre>
@@ -324,7 +324,7 @@ new ResizeObserver(() => {
 const elem = document.querySelector('.dynamic-line-clamp');
 const lh = Number(getComputedStyle(elem, '::after').getPropertyValue('height').slice(0, -2));
 new ResizeObserver(debounce(() => {
-  const lines = Math.round(elem.clientHeight / lh);
+  const lines = Math.floor(elem.clientHeight / lh);
   elem.style.setProperty('--lines', lines);
   elem.style.setProperty('height', `${lines * lh}px`);
 }, 200)).observe(elem);</code></pre>
@@ -361,14 +361,14 @@ new ResizeObserver(debounce(() => {
     const elem = document.querySelector('#basic-observer');
     const lh = Number(getComputedStyle(elem, '::after').getPropertyValue('height').slice(0, -2));
     new ResizeObserver(() => {
-      const lines = Math.round(elem.clientHeight / lh);
+      const lines = Math.floor(elem.clientHeight / lh);
       elem.style.setProperty('--lines', lines);
     }).observe(elem);
 
     const elem2 = document.querySelector('#full-observer');
     const lh2 = Number(getComputedStyle(elem2, '::after').getPropertyValue('height').slice(0, -2));
     new ResizeObserver(debounce(() => {
-      const lines = Math.round(elem2.clientHeight / lh2);
+      const lines = Math.floor(elem2.clientHeight / lh2);
       elem2.style.setProperty('--lines', lines);
       elem2.style.setProperty('height', `${lines * lh2}px`);
     }, 200)).observe(elem2);
